@@ -1,0 +1,13 @@
+body {
+    margin: 0;
+    background-color: #282828;
+    position: relative;
+}
+
+#projector {
+    width: 100%;
+}
+
+#clip {
+    margin: auto;
+}
