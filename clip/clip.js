@@ -14,99 +14,77 @@ export const clip = new MotorCortex.HTMLClip({
   `,
   host: document.getElementById('clip'),
   containerParams: {
-      width: '800px',
+      width: '801px',
       height: '600px'
   },
-  // initParamsValidationRules: {
-    // color: {
-    //   type: "color",
-    //   optional: true,
-    //   default: "white",
-    // },
-  // },
-  // initParams: {
-    // color: "white",
-  // },
+  initParamsValidationRules: {
+    color: {
+      type: "color",
+      optional: true,
+      default: "white",
+    },
+  },
+  initParams: {
+    color: "white",
+  },
  
 });
 const planetAnimation = {
-  id: "planet_1",
+  id: "planet",
   model: {
-    id: "planet",
     loader: "GLTFLoader",
     file: "./assets/planet.glb",
   },
-  settings: {
-    position: { x: 0, y: 0, z: 0 },
-    scale: { x: 0.2, y: 0.2, z: 0.2 },
+};
+
+const spaceShipAnimation = {
+  id: "spaceship",
+  model: {
+    loader: "GLTFLoader",
+    file: "./assets/spaceship.glb",
   },
 };
 
-const entities = [planetAnimation];
+
+const entities = [planetAnimation,spaceShipAnimation];
+
+function pad(n, width, z) {
+  z = z || "0";
+  n = n + "";
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
 
 const threeClip = new threejsPlugin.Clip(
   {
     renderers: {
-      settings: { setClearColor: ["#999"], physicallyCorrectLight: true },
+      settings: { setClearColor: ["#0d121c"], physicallyCorrectLight: true },
     },
-    scenes: { id: "scene", fog: ["#999", 0.1, 500] },
+    scenes: { id: "scene" },
     lights: [
       {
-        parameters: ["#457", 1],
-        type: "SpotLight",
-        settings: {
-          position: { set: [-40, 80, 20] },
-          shadow: {
-            radius: 1.2,
-            camera: {
-              near: 0.5,
-              far: 500,
-              left: -100,
-              bottom: -100,
-              right: 100,
-              top: 100,
-            },
-            bias: 0.01,
-            mapSize: { x: 1024 * 6, y: 1024 * 6 },
-          },
-        },
-      },
-      {
-        parameters: ["#999", 1],
-        type: "PointLight",
-        settings: {
-          position: { set: [-40, 80, 20] },
-          shadow: {
-            radius: 1.2,
-            camera: {
-              near: 0.5,
-              far: 500,
-              left: -100,
-              bottom: -100,
-              right: 100,
-              top: 100,
-            },
-            bias: 0.01,
-            mapSize: { x: 1024 * 6, y: 1024 * 6 },
-          },
-        },
-      },
-      {
         type: "HemisphereLight",
+        parameters:["#ff12fb","#b8eeff", "0.3"],
         settings: {
-          position: { set: [-40, 180, 20] },
+          position: { set: [-290, 70, 150] },
+        },
+      },
+      {
+        type: "DirectionalLight",
+        parameters:["#12ffeb", "0.1"],
+        settings: {
+          position: { set: [-290, 70, 150] },
         },
       },
     ],
     cameras: {
       id: "camera_1",
       settings: {
-        position: { x: -290, y: 70, z: 150 },
-        lookAt: [-33, 14, 30],
+        position: { x: -22, y: 1, z: 9 },
+        lookAt: [0, 0, 0],
       },
     },
     entities,
-    controls: { enable: true },
+    controls: { enable: true, enableEvents: true },
   },
   {
     selector: "#scene",
@@ -114,6 +92,44 @@ const threeClip = new threejsPlugin.Clip(
   }
 );
 
-console.log(threeClip)
+for (let index = 0; index <= 258; index++) {
+  const planetAnimation = new threejsPlugin.MorphAnimation(
+    {
+      attrs: {
+        singleLoopDuration: 2000,
+        animationName: `Cell_0.${pad(index, 3)}Action`,
+      },
+      animatedAttrs: {
+        [`time_${index}`]: 2000,
+      },
+    },
+    {
+      selector: "!#planet",
+      duration: 2000,
+    }
+  );
+  threeClip.addIncident(planetAnimation, 0);
+}
+
+for (let index = 0; index <= 13; index++) {
+  const spaceshipAnimation = new threejsPlugin.MorphAnimation(
+    {
+      attrs: {
+        singleLoopDuration: 2000,
+        animationName: `Action.${pad(index, 3)}`,
+      },
+      animatedAttrs: {
+        [`time_${index}`]: 2000,
+      },
+    },
+    {
+      selector: "!#spaceship",
+      duration: 2000,
+    }
+  );
+  threeClip.addIncident(spaceshipAnimation, 0);
+}
+
+
 
 clip.addIncident(threeClip, 0);
