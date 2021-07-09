@@ -35,7 +35,7 @@ window.addEventListener("message", (event) => {
       // if the initParams validation has failed
       return alert("Error with init params");
     }
-    window.mc = { Player: new Player({ clip: newclip }) };
+    window.mc = { Player: new Player({ clip: newclip,timeFormat:"ms" }) };
   }
 });
 
@@ -44,4 +44,4 @@ const clipContainer = document.getElementById("clip");
 clipContainer.style.width = clip.props.containerParams.width;
 clipContainer.style.height = clip.props.containerParams.height;
 console.log(clip)
-window.mc = { Player: new Player({ clip }) };
+window.mc = { Player: new Player({ clip,pointerEvents:true,timeFormat:"ms" }) };
