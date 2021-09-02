@@ -42,9 +42,9 @@ const spaceShipAnimation = {
   id: "spaceship",
   model: {
     loader: "GLTFLoader",
-    file: "./assets/spaceship.glb",
+    file: "./assets/test/glb/spa.glb",
   },
-  children:["Spaceship_2_animation"]
+  children:["Astronaut_2_Body_Flying","Spaceship_Baked"]
 };
 
 const starsAnimation = {
@@ -117,15 +117,13 @@ const threeClip = new threejsPlugin.Clip(
     ],
     cameras: {
       id: "camera_1",
-      // type: "PerspectiveCamera",
-      // parameters:[45, 1280 / 720, 1, 1000],
       settings: {
         position: { x: -53, y: -2, z: -10 },
         lookAt: [-174, -86, -174],
       },
     },
     entities,
-    controls: { enable: true, enableEvents: true },
+    controls: { enable: true, enableEvents: true, maxPolarAngle: Math.PI },
   },
   {
     selector: "#scene",
@@ -152,57 +150,98 @@ for (let index = 0; index <= 258; index++) {
   threeClip.addIncident(planetAnimation, 0);
 }
 
-for (let index = 0; index <= 13; index++) {
-  const spaceshipAnimation = new threejsPlugin.MorphAnimation(
-    {
-      attrs: {
-        singleLoopDuration: 3000,
-        animationName: `Action.${pad(index, 3)}`,
-      },
-      animatedAttrs: {
-        [`time_${index}`]: 3000,
-      },
-    },
-    {
-      selector: "!#spaceship",
-      duration: 3000,
-    }
-  );
-  threeClip.addIncident(spaceshipAnimation, 0);
-}
+// for (let index = 0; index <= 13; index++) {
+//   const spaceshipAnimation = new threejsPlugin.MorphAnimation(
+//     {
+//       attrs: {
+//         singleLoopDuration: 3000,
+//         animationName: `Action.${pad(index, 3)}`,
+//       },
+//       animatedAttrs: {
+//         [`time_${index}`]: 3000,
+//       },
+//     },
+//     {
+//       selector: "!#spaceship",
+//       duration: 3000,
+//     }
+//   );
+//   threeClip.addIncident(spaceshipAnimation, 0);
+// }
 
-// const starsAnimation = new threejsPlugin.MorphAnimation(
-//   {
-//     attrs: {
-//       singleLoopDuration: 1,
-//       animationName: `animation_0`,
-//     },
-//     animatedAttrs: {
-//       [`time`]: 1,
-//     },
-//   },
-//   {
-//     selector: "!#stars",
-//     duration: 1,
-//   }
-// );
-// threeClip.addIncident(starsAnimation, 0);
+
+const spaceshipAnimation = new threejsPlugin.MorphAnimation(
+      {
+        attrs: {
+          singleLoopDuration: 3000,
+          animationName: `Spaceship_Flight`,
+        },
+        animatedAttrs: {
+          [`time`]: 3000,
+        },
+      },
+      {
+        selector: "!#spaceship",
+        duration: 3000,
+      }
+    );
+threeClip.addIncident(spaceshipAnimation, 0);
+
+const flamesAnimation = new threejsPlugin.MorphAnimation(
+  {
+    attrs: {
+      singleLoopDuration: 3000,
+      animationName: `Flames`,
+    },
+    animatedAttrs: {
+      [`time`]: 3000,
+    },
+  },
+  {
+    selector: "!#spaceship",
+    duration: 3000,
+  }
+);
+threeClip.addIncident(flamesAnimation, 0);
+
+
+const Astronaut2 = new threejsPlugin.MorphAnimation(
+  {
+    attrs: {
+      singleLoopDuration: 3000,
+      animationName: `Asronaut_2_RIG_Flying`,
+    },
+    animatedAttrs: {
+      [`time`]: 3000,
+    },
+  },
+  {
+    selector: "!#spaceship",
+    duration: 3000,
+  }
+);
+threeClip.addIncident(Astronaut2, 0);
 
 const cameraAnimation = new threejsPlugin.ObjectAnimation(
   {
     animatedAttrs: {
-      targetEntity: "!#spaceship.Spaceship_2_animation",
-      // position: { x: 0, y: 0, z: 0 }
+      followEntity: {
+        offsetX: -10, 
+        offsetY: -0, 
+        offsetZ: -10,
+        entity: "!#spaceship.Spaceship_Baked"
+      },
+      targetEntity: "!#spaceship.Spaceship_Baked",
     },
   },
   {
     selector: "!#camera_1",
-    duration: 2500,
+    duration: 3000,
   }
 );
-threeClip.addIncident(cameraAnimation,500);
+threeClip.addIncident(cameraAnimation,0);
 
+console.log(threeClip,"CLIP")
 
-
-
+window.clip= threeClip
 clip.addIncident(threeClip, 0);
