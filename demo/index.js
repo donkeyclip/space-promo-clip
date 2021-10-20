@@ -1,5 +1,5 @@
-import { utils } from "@kissmybutton/motorcortex";
-import Player from "@kissmybutton/motorcortex-player";
+import { utils } from "@donkeyclip/motorcortex";
+import Player from "@donkeyclip/motorcortex-player";
 import { clip } from "../clip/clip";
 import clipId from "../clip/id";
 import initParamsApply from "./scripts/initParamsApply";
@@ -20,10 +20,7 @@ window.top.postMessage(
 
 window.addEventListener("message", (event) => {
   if (event.data.what === "initParamsChange") {
-    const newLiveDef = initParamsApply(
-      liveDef,
-      event.data.initParams
-    );
+    const newLiveDef = initParamsApply(liveDef, event.data.initParams);
     document.getElementById("projector").innerHTML = "<div id='clip'></div>";
     const clipContainer = document.getElementById("clip");
     // set clip container's dimensions
@@ -35,7 +32,7 @@ window.addEventListener("message", (event) => {
       // if the initParams validation has failed
       return alert("Error with init params");
     }
-    window.mc = { Player: new Player({ clip: newclip,timeFormat:"ms" }) };
+    window.mc = { Player: new Player({ clip: newclip, timeFormat: "ms" }) };
   }
 });
 
@@ -43,5 +40,4 @@ const clipContainer = document.getElementById("clip");
 // set clip container's dimensions
 clipContainer.style.width = clip.props.containerParams.width;
 clipContainer.style.height = clip.props.containerParams.height;
-console.log(clip)
-window.mc = { Player: new Player({ clip,pointerEvents:true,timeFormat:"ms" }) };
+new Player({ clip, pointerEvents: true, timeFormat: "ms" });
