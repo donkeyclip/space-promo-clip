@@ -57,7 +57,7 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-promise": "5.1.0",
+    "eslint-plugin-promise": "5.2.0",
     "posthtml": "^0.16.5",
     "posthtml-include": "^1.7.1",
     "prettier": "^2.4.1",
