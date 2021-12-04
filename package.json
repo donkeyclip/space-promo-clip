@@ -60,7 +60,7 @@
     "eslint-plugin-promise": "5.1.0",
     "posthtml": "^0.16.5",
     "posthtml-include": "^1.7.1",
-    "prettier": "^2.4.1",
+    "prettier": "2.5.1",
     "rimraf": "^3.0.2",
     "size-limit": "^6.0.3",
     "style-loader": "^3.3.0",
