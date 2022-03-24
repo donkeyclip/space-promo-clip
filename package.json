@@ -65,6 +65,6 @@
     "webpack-dev-server": "4.7.3"
   },
   "dependencies": {
-    "@donkeyclip/motorcortex-threejs": "^2.5.0"
+    "@donkeyclip/motorcortex-threejs": "2.5.1"
   }
 }
