@@ -29,7 +29,7 @@
     }
   },
   "devDependencies": {
-    "@babel/core": "7.16.12",
+    "@babel/core": "7.29.6",
     "@babel/eslint-parser": "7.16.5",
     "@babel/plugin-syntax-jsx": "7.16.7",
     "@babel/plugin-transform-react-jsx": "7.16.7",
